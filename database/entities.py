@@ -19,14 +19,17 @@ class User(db.Model, ObjectWithDefaultProps, ObjectWithLocation, ObjectWithConta
     phone = db.Column(db.String(10), unique=True, nullable=False)
     main_preference_mode = db.Column(db.Integer, nullable=False) #This is an int; in the manager class we need to check if it conforms to our enum PreferenceMode 
 
+
+
 class Advertisement(db.Model, ObjectWithDefaultProps, ObjectWithLocation, ObjectWithContactDetails):
     title = db.Column(db.String(20), nullable=False)
     details = db.Column(db.String(300), nullable=False)
     deadline = db.Column(db.DateTime)
     finished = db.Column(db.Boolean, nullable=False, default=False)
 
-    #TODO: Add author
-    #TODO: add categories
+    author_id = db.Column(db.Integer, db.ForeignKey("user.server_id"))
+    author = db.relationship("User", foreign_keys=author_id, lazy="joined")
+    
 
 class Category(db.Model, ObjectWithDefaultProps):
     name = db.Column(db.String(10), unique=True, nullable=False)
@@ -35,6 +38,8 @@ class Category(db.Model, ObjectWithDefaultProps):
 class Message(db.Model, ObjectWithDefaultProps):
     body = db.Column(db.String, nullable=False)
 
-    
-    #TODO: Add receiver
-    #TODO: Add sender  
+    receiver_id = db.Column(db.Integer, db.ForeignKey("user.server_id"))
+    sender_id = db.Column(db.Integer, db.ForeignKey("user.server_id"))
+
+    receiver = db.relationship("User", foreign_keys=receiver_id, lazy="joined")
+    sender = db.relationship("User", foreign_keys=sender_id, lazy="joined")
