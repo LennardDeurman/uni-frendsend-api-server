@@ -1,0 +1,14 @@
+.idea
+.vscode/
+*.rdb
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyc
+*.sqlite
+venv/
+env/
+__pycache__/
+venv/
+.venv/
+env/
