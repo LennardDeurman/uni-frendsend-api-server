@@ -4,6 +4,8 @@ import firebase_admin
 import json
 import urllib.request
 
+#Connection with the Google Apis (Login)
+
 class ServerUtil:
 
     VERSION_BETA = "beta"

@@ -1,6 +1,12 @@
 from flask import jsonify
 import simplejson as json
 
+'''
+
+This file creates the response json to the server
+
+'''
+
 
 class ResultMessage:
 

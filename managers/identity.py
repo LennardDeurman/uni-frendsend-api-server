@@ -8,6 +8,9 @@ class UserInfoMissingException(Exception):
 class FirebaseInfoMissingException(Exception):
     pass
 
+class UnauthorizedAccessException(Exception):
+    pass
+
 class IdentityManager:
 
     class Headers:

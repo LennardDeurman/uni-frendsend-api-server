@@ -1,9 +1,8 @@
 from app.provider import db
 
-class ObjectManager:
+#This is the base manager class
 
-    class Keys:
-        SERVER_ID = "server_id"
+class ObjectManager:
 
     def __init__(self, cls_type):
         self.cls_type = cls_type
@@ -31,9 +30,8 @@ class ObjectManager:
         return db_object
 
     def update_or_create(self, dictionary, auto_commit=True):
-        server_id = dictionary.get(ObjectManager.Keys.SERVER_ID)
+        server_id = dictionary.get(self.cls_type.server_id.key)
 
-        #TODO: out of scope for now, prevent updating of unwanted values
 
         if server_id != None:
             db_object = self.get_single(server_id)
