@@ -18,8 +18,8 @@ class ObjectWithLocation:
     coordinates = db.Column(db.String(100), nullable=False) 
 
 class ObjectWithContactDetails:
-    phone = db.Column(db.String(10), unique=True, nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
+    phone = db.Column(db.String(10), unique=False, nullable=False)
+    email = db.Column(db.String(100), unique=False, nullable=False)
 
 
 class DBModel(db.Model):
