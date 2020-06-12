@@ -25,3 +25,5 @@ You need to install PostMan in order to open.
 For instructions see the requests and the additional comments
 
 You need to run the server locally to start run the venv and call python main.py in the cmd
+
+Before starting you need to call the scripts reset_database.py and reset_categories.py
