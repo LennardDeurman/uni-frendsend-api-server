@@ -46,6 +46,10 @@ class AdvertisementsManager (ObjectManager):
 
     def update_or_create(self, dictionary, auto_commit=True):
         dictionary_util.timestamp_dict_value_to_date(dictionary, Advertisement.deadline.key)
-        self.location_resolver.apply_coordinates_info_to_dict(dictionary)
+        if dictionary.get(Advertisement.zip_code.key) != None:
+            self.location_resolver.apply_coordinates_info_to_dict(dictionary)
+        else:
+            dictionary[Advertisement.coordinates.key] = self.identity_manager.user.coordinates
+        
         dictionary[Advertisement.author_id.key] = self.identity_manager.user.server_id
         return super().update_or_create(dictionary, auto_commit=auto_commit)

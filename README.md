@@ -23,3 +23,5 @@ The API docs can be found via the PostMan link: https://www.getpostman.com/colle
 You need to install PostMan in order to open. 
 
 For instructions see the requests and the additional comments
+
+You need to run the server locally to start run the venv and call python main.py in the cmd
