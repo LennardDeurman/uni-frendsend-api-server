@@ -9,5 +9,6 @@ def dictionaries_from_objects(db_objects):
 def timestamp_dict_value_to_date(dictionary, key):
     value = dictionary.get(key)
     if (value != None):
-        dictionary[key] = datetime.fromtimestamp(value)
+        dtn = datetime.fromtimestamp(value)
+        dictionary[key] = dtn
 
