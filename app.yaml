@@ -1,6 +1,5 @@
 runtime: python37
 service: default
-entrypoint: gunicorn -b :$PORT main:flask_app
 
 handlers:
   - url: /.*
