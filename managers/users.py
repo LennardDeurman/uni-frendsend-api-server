@@ -16,14 +16,14 @@ class UsersManager (ObjectManager):
         dictionary[User.firebase_uid.key] = self.identity_manager.firebase_user.uid #This is to ensure only the object of the own user is edited 
         if (dictionary.get(User.email.key) == None):
             dictionary[User.email.key] = self.identity_manager.firebase_user.email
-        
+          
         dictionary_util.timestamp_dict_value_to_date(dictionary, User.date_of_birth.key)
         self.location_resolver.apply_coordinates_info_to_dict(dictionary)
 
         current_user = self.identity_manager.user
         if current_user == None:
             current_user = self.create(
-                dictionary
+                dictionary             
             )
         else:
             current_user = self.update_existing_object(current_user, dictionary)

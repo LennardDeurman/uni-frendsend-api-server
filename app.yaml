@@ -1,0 +1,8 @@
+runtime: python37
+service: api-server
+
+handlers:
+  - url: /.*
+    script: auto
+env_variables:
+  IS_APP_ENGINE: true
