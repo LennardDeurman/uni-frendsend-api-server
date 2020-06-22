@@ -6,3 +6,7 @@ handlers:
     script: auto
 env_variables:
   IS_APP_ENGINE: true
+  CLOUDSQL_CONNECTION_NAME: frendsend:us-central1:cloudy-mysql
+  CLOUDSQL_USER: root
+  CLOUDSQL_PASSWORD: Swaps_07
+  CLOUDSQL_DATABASE: main_db

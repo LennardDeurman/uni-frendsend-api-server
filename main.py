@@ -1,10 +1,12 @@
 import dictionary_util
+import populate_database
 from app.provider import flask_app, db
 from flask import request, g
 from managers.identity import IdentityManager, UnauthorizedAccessException, UserInfoMissingException, FirebaseInfoMissingException
 from managers.users import UsersManager
 from managers.categories import CategoriesManager
 from managers.chat import ChatManager
+from managers.upload import GoogleStorageManager
 from managers.advertisements import AdvertisementsManager
 from database.entities import User, Advertisement
 from result_message import ResultMessage
@@ -12,6 +14,7 @@ from server_util import ServerUtil
 from werkzeug.utils import secure_filename
 from overviews.advertisements import AdvertisementsOverview
 from overviews.users import UsersOverview
+
 ServerUtil.initialize_app(flask_app)
 is_debug = ServerUtil.is_debug()
 
@@ -33,6 +36,16 @@ def access_exception_handler(error):
 def access_exception_handler(error):
     return ResultMessage.fail_with_object(ResultMessage.StatusCodes.NO_ACCESS, error)
 
+
+@app.route("/admin/reset/db")
+def reset_db():
+    populate_database.reset_database()
+    return ResultMessage.ok()
+
+@app.route("/admin/reset/cats")
+def reset_cats():
+    populate_database.reset_categories()
+    return ResultMessage.ok()    
 
 #Gets a dummy token for testing purposes
 @app.route("/idtoken")
@@ -152,9 +165,9 @@ def get_categories():
 def upload():
     g.identity_manager.validate()
     f = request.files['file']
-    file_name = "data/{0}".format(secure_filename(f.filename))
-    f.save(file_name)
-    return ResultMessage.ok_with_object(file_name)
+    file_name = secure_filename(f.filename)
+    result = GoogleStorageManager().upload_file(f, file_name)
+    return ResultMessage.ok_with_object(result)
 
 if __name__ == '__main__':
 	app.run(debug=is_debug, port=5001)  

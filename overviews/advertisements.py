@@ -16,7 +16,11 @@ class AdvertisementsOverview:
     def __init__(self, identity_manager, request):
         self.max_distance_km = int(request.args.get(AdvertisementsOverview.Keys.MAX_KM, default=10))
         self.search = request.args.get(AdvertisementsOverview.Keys.SEARCH, default="")
-        self.cat_ids = list(map(int, request.args.get(AdvertisementsOverview.Keys.CATS, default="").split(",")))
+        cats_str = request.args.get(AdvertisementsOverview.Keys.CATS, default="")
+        if (len(cats_str) > 0):
+            self.cat_ids = list(map(int, cats_str.split(",")))
+        else:
+            self.cat_ids = []
         self.offset = int(request.args.get(AdvertisementsOverview.Keys.OFFSET, default=0))
         self.limit = int(request.args.get(AdvertisementsOverview.Keys.LIMIT, default=20))
         self.order = int(request.args.get(AdvertisementsOverview.Keys.ORDER, default=0))

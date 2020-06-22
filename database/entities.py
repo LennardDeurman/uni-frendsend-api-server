@@ -6,8 +6,10 @@ These are the database entities itself, which may possible inherit properties fr
 
 from database.extensions import ObjectWithDefaultProps, ObjectWithLocation, ObjectWithContactDetails, DBModel
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy.sql.expression import cast
 from app.provider import db
 from datetime import datetime 
+import sqlalchemy
 import math
 
 class User(DBModel, ObjectWithDefaultProps, ObjectWithLocation, ObjectWithContactDetails):
@@ -59,20 +61,16 @@ class Advertisement(DBModel, ObjectWithDefaultProps, ObjectWithLocation, ObjectW
     def distance(self, my_coordinates):
         lon1 = db.func.substr(self.coordinates, db.func.instr(self.coordinates, ',') + 1)
         lat1 = db.func.substr(self.coordinates, 0, db.func.instr(self.coordinates, ','))
-
-
-        lat1 = db.func.to_float(
-            lat1
-        )
-        lon1 = db.func.to_float(
-            lon1
-        )
-
         lat2 = db.func.substr(my_coordinates, 0, db.func.instr(my_coordinates, ','))
         lon2 = db.func.substr(my_coordinates, db.func.instr(my_coordinates, ',') + 1)
 
         earth_radius_km = 6371.009
         
+        lon1 = cast(lon1, sqlalchemy.Float)
+        lon2 = cast(lon2, sqlalchemy.Float)
+        lat1 = cast(lat1, sqlalchemy.Float)
+        lat2 = cast(lat2, sqlalchemy.Float)
+
         km_per_deg_lat = db.literal(2 * math.pi * earth_radius_km / 360.0)
 
         km_per_deg_lon = km_per_deg_lat * db.func.cos(
@@ -81,19 +79,19 @@ class Advertisement(DBModel, ObjectWithDefaultProps, ObjectWithLocation, ObjectW
             )
         )
 
-        lat_calc_col = db.func.pow(km_per_deg_lat * (lat1 - lat2), 2)
-        lon_calc_col = db.func.pow(km_per_deg_lon * (lon1 - lon2), 2)
+        lat_calc_col = db.func.power(km_per_deg_lat * (lat1 - lat2), 2)
+        lon_calc_col = db.func.power(km_per_deg_lon * (lon1 - lon2), 2)
         calc_col = lat_calc_col + lon_calc_col
 
         return db.func.round(db.func.sqrt(calc_col), 2)
     
 
 class Category(DBModel, ObjectWithDefaultProps):
-    name = db.Column(db.String(10), unique=True, nullable=False)
-    color = db.Column(db.String(6), unique=True, nullable=False)
+    name = db.Column(db.String(20), unique=True, nullable=False)
+    color = db.Column(db.String(20), unique=True, nullable=False)
 
 class Message(DBModel, ObjectWithDefaultProps):
-    body = db.Column(db.String, nullable=False)
+    body = db.Column(db.String(250), nullable=False)
 
     receiver_id = db.Column(db.Integer, db.ForeignKey("user.server_id"))
     sender_id = db.Column(db.Integer, db.ForeignKey("user.server_id"))

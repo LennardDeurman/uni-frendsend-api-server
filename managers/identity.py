@@ -30,9 +30,14 @@ class IdentityManager:
             self.user = None
 
     def fetch_firebase_user(self, id_token):
-        response = auth.verify_id_token(id_token)
-        uid = response[IdentityManager.Keys.UID]
-        return auth.get_user(uid)
+        if (id_token != None and id_token != ""):
+            try:
+                response = auth.verify_id_token(id_token)
+                uid = response[IdentityManager.Keys.UID]
+                return auth.get_user(uid)
+            except:
+                return None
+        return None
     
     def validate(self):
         if self.user == None:

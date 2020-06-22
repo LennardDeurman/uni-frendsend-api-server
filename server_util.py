@@ -12,8 +12,8 @@ class ServerUtil:
     VERSION_PROD = "prod"
     GOOGLE_CREDENTIALS_KEY = "GOOGLE_APPLICATION_CREDENTIALS"
     GOOGLE_CREDENTIALS_FILE = "service_account_key.json"
-    API_KEY = "AIzaSyBtQiG6ZHKZ-UroaXXDG97HiPlrI96sUPQ"
-    DEMO_UID = "8dryBOqYduMSTLMBCztp78wRXaY2"
+    API_KEY = "AIzaSyAfpk40rwIRMhNV_GobhMal5GVRmDTLd-k"
+    DEMO_UID = "JGWFLKM0KpUucRhXVEzxQIitmgo1"
 
     class Keys:
         APP_ENGINE_VERSION = "app_engine_version"
