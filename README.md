@@ -1,5 +1,7 @@
 # server
 
+This project was created as part of the University Utrecht course INFOB1PROJ assignment. The repository serves as underlying back-end for the conceptual app. Completly built with Flask and SQLAlchemy. 
+
 Work with the virtualenvironment structure for building the project:
 
 To create (not necessary when cloned)
